@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NetIA Pro — Sistema</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#0A0A08;--paper:#F7F3EC;--cream:#EDE8DF;
+  --gold:#B8960C;--gold2:#D4AF37;--gold-light:rgba(184,150,12,0.12);
+  --green:#1A6B3C;--green-light:rgba(26,107,60,0.1);
+  --white:#FFFFFF;--muted:#7A7570;--border:rgba(10,10,8,0.1);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Space Grotesk',sans-serif;background:var(--paper);color:var(--ink);overflow-x:hidden}
+
+/* LOGIN */
+#login-screen{
+  min-height:100vh;display:flex;align-items:center;justify-content:center;
+  padding:24px;
+  background:var(--ink);
+}
+.login-box{
+  background:#111;border:1px solid #2a2a25;border-radius:16px;
+  padding:48px;width:100%;max-width:420px;position:relative;
+}
+.login-box::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--gold),var(--gold2));
+  border-radius:16px 16px 0 0;
+}
+.login-logo{font-family:'Cormorant Garamond',serif;font-size:24px;color:var(--gold);margin-bottom:6px}
+.login-logo em{font-style:italic}
+.login-sub{font-size:12px;color:#555;margin-bottom:36px}
+.login-label{display:block;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#666;margin-bottom:8px}
+.login-input{
+  width:100%;background:#0a0a08;border:1px solid #2a2a25;border-radius:6px;
+  padding:13px 16px;color:var(--paper);
+  font-family:'Space Grotesk',sans-serif;font-size:14px;
+  outline:none;transition:border-color .2s;margin-bottom:20px;
+}
+.login-input:focus{border-color:var(--gold)}
+.login-input::placeholder{color:#333}
+.login-btn{
+  width:100%;background:var(--gold);color:var(--ink);
+  border:none;border-radius:6px;padding:14px;
+  font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700;
+  letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .2s;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+}
+.login-btn:hover:not(:disabled){background:var(--gold2);transform:translateY(-1px)}
+.login-btn:disabled{opacity:.5;cursor:not-allowed}
+.login-err{
+  background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.2);
+  border-radius:6px;padding:10px 14px;font-size:13px;color:#f87171;
+  margin-top:12px;display:none;
+}
+.login-err.show{display:block}
+.spinner{width:12px;height:12px;border:2px solid rgba(10,10,8,0.3);border-top-color:var(--ink);border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* SISTEMA */
+#sistema-screen{display:none}
+
+nav{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:16px 48px;position:sticky;top:0;z-index:100;
+  background:rgba(247,243,236,0.95);backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600}
+.nav-logo em{font-style:italic;color:var(--gold)}
+.nav-user{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:16px}
+.nav-badge{
+  background:var(--green-light);color:var(--green);
+  font-size:10px;font-weight:700;padding:3px 10px;border-radius:3px;
+  letter-spacing:1px;text-transform:uppercase;
+}
+.btn-logout{
+  background:transparent;border:1px solid var(--border);border-radius:4px;
+  padding:6px 14px;font-family:'Space Grotesk',sans-serif;font-size:11px;
+  font-weight:600;cursor:pointer;color:var(--muted);transition:all .2s;
+}
+.btn-logout:hover{border-color:var(--ink);color:var(--ink)}
+
+.hero-sys{
+  background:var(--ink);padding:60px 48px;color:var(--paper);
+  position:relative;overflow:hidden;
+}
+.hero-sys::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 60% 80% at 80% 50%,rgba(184,150,12,0.08) 0%,transparent 70%);
+}
+.hero-sys-content{max-width:1100px;margin:0 auto;position:relative;z-index:1}
+.hero-sys-tag{font-size:10px;font-weight:700;color:var(--gold);letter-spacing:3px;text-transform:uppercase;margin-bottom:16px}
+.hero-sys h1{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,4vw,60px);font-weight:300;line-height:1.1;margin-bottom:12px}
+.hero-sys h1 em{font-style:italic;color:var(--gold)}
+.hero-sys p{font-size:15px;color:rgba(247,243,236,0.5);max-width:500px;line-height:1.8;font-weight:300}
+
+main{max-width:1100px;margin:0 auto;padding:60px 48px}
+
+/* TABS */
+.tabs{display:flex;gap:2px;background:var(--cream);border-radius:8px;padding:4px;margin-bottom:48px;max-width:560px}
+.tab{
+  flex:1;padding:10px 16px;border-radius:6px;font-size:12px;font-weight:500;
+  cursor:pointer;transition:all .2s;text-align:center;border:none;
+  background:transparent;font-family:'Space Grotesk',sans-serif;color:var(--muted);
+}
+.tab.active{background:var(--ink);color:var(--paper)}
+
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+
+/* GUÍAS */
+.guides-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.guide-card{
+  background:var(--white);border:1px solid var(--border);border-radius:12px;
+  padding:28px;transition:all .3s;cursor:pointer;position:relative;overflow:hidden;
+}
+.guide-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--gold),var(--gold2));
+  opacity:0;transition:opacity .3s;
+}
+.guide-card:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(10,10,8,0.08)}
+.guide-card:hover::before{opacity:1}
+.guide-icon{font-size:28px;margin-bottom:14px}
+.guide-title{font-size:15px;font-weight:600;margin-bottom:8px}
+.guide-desc{font-size:12px;color:var(--muted);line-height:1.7}
+.guide-tag{
+  display:inline-block;background:var(--gold-light);color:var(--gold);
+  font-size:9px;font-weight:700;padding:2px 8px;border-radius:3px;
+  letter-spacing:1px;text-transform:uppercase;margin-top:12px;
+}
+
+/* RECURSOS */
+.recursos-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.recurso-card{
+  background:var(--white);border:1px solid var(--border);border-radius:12px;
+  padding:28px;display:flex;align-items:flex-start;gap:16px;
+  transition:all .2s;
+}
+.recurso-card:hover{border-color:var(--gold);box-shadow:0 8px 24px rgba(184,150,12,0.08)}
+.recurso-icon{
+  width:44px;height:44px;border-radius:8px;background:var(--cream);
+  border:1px solid var(--border);display:flex;align-items:center;justify-content:center;
+  font-size:20px;flex-shrink:0;
+}
+.recurso-body{}
+.recurso-title{font-size:14px;font-weight:600;margin-bottom:6px}
+.recurso-desc{font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:12px}
+.recurso-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--ink);color:var(--paper);
+  border:none;border-radius:4px;padding:8px 16px;
+  font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:600;
+  letter-spacing:0.5px;text-transform:uppercase;cursor:pointer;
+  text-decoration:none;transition:all .2s;
+}
+.recurso-btn:hover{background:var(--gold)}
+
+/* PROSPECTOS */
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:32px}
+.stat-box{
+  background:var(--white);border:1px solid var(--border);border-radius:10px;
+  padding:24px;
+}
+.stat-n{font-family:'Cormorant Garamond',serif;font-size:48px;font-weight:600;color:var(--gold);line-height:1}
+.stat-l{font-size:12px;color:var(--muted);margin-top:4px}
+
+.prospectos-table{
+  background:var(--white);border:1px solid var(--border);border-radius:12px;overflow:hidden;
+}
+.table-header{
+  display:grid;grid-template-columns:1fr 1fr 1fr 1fr;
+  padding:12px 20px;background:var(--cream);
+  font-size:10px;font-weight:700;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;
+}
+.table-row{
+  display:grid;grid-template-columns:1fr 1fr 1fr 1fr;
+  padding:14px 20px;border-top:1px solid var(--border);
+  font-size:13px;align-items:center;transition:background .15s;
+}
+.table-row:hover{background:var(--cream)}
+.badge-interes{
+  display:inline-block;font-size:10px;font-weight:600;padding:2px 8px;border-radius:3px;
+  letter-spacing:0.5px;text-transform:uppercase;
+}
+.badge-salud{background:var(--green-light);color:var(--green)}
+.badge-negocio{background:var(--gold-light);color:var(--gold)}
+.badge-sistema{background:rgba(99,102,241,0.1);color:#6366f1}
+.empty-state{padding:48px;text-align:center;color:var(--muted);font-size:14px}
+
+@media(max-width:768px){
+  nav,main,.hero-sys{padding-left:20px;padding-right:20px}
+  .guides-grid,.recursos-grid,.stats-row{grid-template-columns:1fr}
+  .table-header,.table-row{grid-template-columns:1fr 1fr}
+  .table-header span:nth-child(3),.table-header span:nth-child(4),
+  .table-row span:nth-child(3),.table-row span:nth-child(4){display:none}
+  .tabs{max-width:100%}
+}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">NetIA<em>Pro</em></div>
+    <div class="login-sub">Ingresa tu token de acceso</div>
+    <label class="login-label">Token</label>
+    <input class="login-input" type="text" id="token-input" placeholder="Pega tu token aquí" autocomplete="off">
+    <button class="login-btn" id="login-btn" onclick="verificarToken()">
+      <span id="login-text">Ingresar al sistema</span>
+      <span id="login-spin" class="spinner" style="display:none"></span>
+    </button>
+    <div class="login-err" id="login-err">Token inválido o inactivo. Contacta a tu patrocinador.</div>
+  </div>
+</div>
+
+<!-- SISTEMA -->
+<div id="sistema-screen">
+  <nav>
+    <div class="nav-logo">NetIA<em>Pro</em></div>
+    <div class="nav-user">
+      <span class="nav-badge">✓ Activo</span>
+      <span id="nav-nombre"></span>
+      <button class="btn-logout" onclick="logout()">Salir</button>
+    </div>
+  </nav>
+
+  <div class="hero-sys">
+    <div class="hero-sys-content">
+      <div class="hero-sys-tag">Panel de control</div>
+      <h1>Bienvenido,<br><em id="hero-nombre"></em></h1>
+      <p>Tu sistema NetIA Pro está activo. Aquí encontrarás todo lo que necesitas para crecer tu red 4Life con inteligencia artificial.</p>
+    </div>
+  </div>
+
+  <main>
+    <div class="tabs">
+      <button class="tab active" onclick="showTab('guias')">Guías</button>
+      <button class="tab" onclick="showTab('recursos')">Recursos 4Life</button>
+      <button class="tab" onclick="showTab('prospectos')">Mis prospectos</button>
+    </div>
+
+    <!-- GUÍAS -->
+    <div id="tab-guias" class="tab-panel active">
+      <div class="guides-grid">
+        <div class="guide-card">
+          <div class="guide-icon">🚀</div>
+          <div class="guide-title">Primeros pasos</div>
+          <div class="guide-desc">Cómo configurar tu sistema NetIA Pro desde cero. Landing, WhatsApp y automatizaciones en menos de 24 horas.</div>
+          <span class="guide-tag">Inicio</span>
+        </div>
+        <div class="guide-card">
+          <div class="guide-icon">📲</div>
+          <div class="guide-title">Chatbot WhatsApp</div>
+          <div class="guide-desc">Aprende a personalizar tu chatbot IA para responder preguntas sobre 4Life y Transfer Factor de forma inteligente.</div>
+          <span class="guide-tag">IA</span>
+        </div>
+        <div class="guide-card">
+          <div class="guide-icon">🌐</div>
+          <div class="guide-title">Tu landing page</div>
+          <div class="guide-desc">Cómo compartir tu landing y atraer prospectos desde redes sociales, grupos de WhatsApp y referidos.</div>
+          <span class="guide-tag">Marketing</span>
+        </div>
+        <div class="guide-card">
+          <div class="guide-icon">📊</div>
+          <div class="guide-title">Gestión de prospectos</div>
+          <div class="guide-desc">Cómo dar seguimiento efectivo a tus prospectos usando la base de datos y los mensajes automáticos del sistema.</div>
+          <span class="guide-tag">Ventas</span>
+        </div>
+        <div class="guide-card">
+          <div class="guide-icon">💰</div>
+          <div class="guide-title">Plan de compensación</div>
+          <div class="guide-desc">Entiende cómo funcionan las comisiones Rapid Rewards, el Bono Constructor y los ingresos residuales de 4Life.</div>
+          <span class="guide-tag">Negocio</span>
+        </div>
+        <div class="guide-card">
+          <div class="guide-icon">🔄</div>
+          <div class="guide-title">Duplicación del sistema</div>
+          <div class="guide-desc">Cómo dar acceso a NetIA Pro a tus nuevos afiliados para que ellos también tengan su propio sistema automatizado.</div>
+          <span class="guide-tag">Duplicación</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- RECURSOS -->
+    <div id="tab-recursos" class="tab-panel">
+      <div class="recursos-grid">
+        <div class="recurso-card">
+          <div class="recurso-icon">🛍️</div>
+          <div class="recurso-body">
+            <div class="recurso-title">Tienda 4Life</div>
+            <div class="recurso-desc">Accede a la tienda oficial de 4Life para tu país. Compra productos y comparte tu link personalizado con prospectos.</div>
+            <a id="link-tienda" href="https://usnfr.4life.com/12925816/shop" target="_blank" class="recurso-btn">→ Ir a la tienda</a>
+          </div>
+        </div>
+        <div class="recurso-card">
+          <div class="recurso-icon">📝</div>
+          <div class="recurso-body">
+            <div class="recurso-title">Inscripción 4Life</div>
+            <div class="recurso-desc">Link directo para inscribir nuevos afiliados bajo tu código patrocinador. Compártelo con quienes quieran unirse.</div>
+            <a id="link-inscripcion" href="https://usnfr.4life.com/12925816/signup/PC" target="_blank" class="recurso-btn">→ Inscribir afiliado</a>
+          </div>
+        </div>
+        <div class="recurso-card">
+          <div class="recurso-icon">🤖</div>
+          <div class="recurso-body">
+            <div class="recurso-title">Tu chatbot IA</div>
+            <div class="recurso-desc">Accede a tu chatbot de WhatsApp con inteligencia artificial. Disponible 24/7 para responder preguntas sobre 4Life.</div>
+            <a href="https://wa.me/14155238886" target="_blank" class="recurso-btn">→ Abrir chatbot</a>
+          </div>
+        </div>
+        <div class="recurso-card">
+          <div class="recurso-icon">🌐</div>
+          <div class="recurso-body">
+            <div class="recurso-title">Tu landing page</div>
+            <div class="recurso-desc">Tu página personalizada de NetIA Pro. Compártela en redes sociales para atraer nuevos prospectos automáticamente.</div>
+            <a href="https://netiapro.github.io/netiapro" target="_blank" class="recurso-btn">→ Ver mi landing</a>
+          </div>
+        </div>
+        <div class="recurso-card">
+          <div class="recurso-icon">📚</div>
+          <div class="recurso-body">
+            <div class="recurso-title">eBook Transfer Factor</div>
+            <div class="recurso-desc">Guía completa sobre Transfer Factor, sus beneficios científicos y cómo presentar los productos a tus prospectos.</div>
+            <a href="netiapro-ebook.html" target="_blank" class="recurso-btn">→ Ver eBook</a>
+          </div>
+        </div>
+        <div class="recurso-card">
+          <div class="recurso-icon">🏢</div>
+          <div class="recurso-body">
+            <div class="recurso-title">Portal 4Life oficial</div>
+            <div class="recurso-desc">Accede al portal oficial de 4Life para gestionar tu cuenta, ver tus comisiones y acceder a materiales de marketing.</div>
+            <a href="https://my.4life.com" target="_blank" class="recurso-btn">→ Portal 4Life</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROSPECTOS -->
+    <div id="tab-prospectos" class="tab-panel">
+      <div class="stats-row">
+        <div class="stat-box">
+          <div class="stat-n" id="stat-total">—</div>
+          <div class="stat-l">Total prospectos</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-n" id="stat-negocio">—</div>
+          <div class="stat-l">Interés en negocio</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-n" id="stat-sistema">—</div>
+          <div class="stat-l">Interés en NetIA Pro</div>
+        </div>
+      </div>
+
+      <div class="prospectos-table">
+        <div class="table-header">
+          <span>Nombre</span>
+          <span>País</span>
+          <span>Interés</span>
+          <span>Fecha</span>
+        </div>
+        <div id="prospectos-body">
+          <div class="empty-state">Cargando prospectos...</div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+const SUPABASE_URL = 'https://eyybwmrxdqmsscncgnnb.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV5eWJ3bXJ4ZHFtc3NjbmNnbm5iIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc5OTE3NTUsImV4cCI6MjA5MzU2Nzc1NX0.hv-sC2G6xhDItIIKkFZuuxYtCRYyl9A0WnAM6KktmWA';
+
+let afiliadoData = null;
+
+async function verificarToken() {
+  const token = document.getElementById('token-input').value.trim();
+  const errEl = document.getElementById('login-err');
+  errEl.classList.remove('show');
+
+  if (!token) {
+    errEl.textContent = 'Por favor ingresa tu token.';
+    errEl.classList.add('show');
+    return;
+  }
+
+  const btn = document.getElementById('login-btn');
+  btn.disabled = true;
+  document.getElementById('login-text').style.display = 'none';
+  document.getElementById('login-spin').style.display = 'inline-block';
+
+  try {
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/Afiliados autorizados?Token=eq.${encodeURIComponent(token)}&Activo=eq.true`,
+      { headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` } }
+    );
+    const data = await res.json();
+
+    if (data && data.length > 0) {
+      afiliadoData = data[0];
+      sessionStorage.setItem('netiapro_token', token);
+      sessionStorage.setItem('netiapro_nombre', afiliadoData.Nombre || 'Afiliado');
+      mostrarSistema(afiliadoData.Nombre || 'Afiliado');
+    } else {
+      errEl.textContent = 'Token inválido o inactivo. Contacta a tu patrocinador.';
+      errEl.classList.add('show');
+    }
+  } catch (e) {
+    errEl.textContent = 'Error de conexión. Intenta de nuevo.';
+    errEl.classList.add('show');
+  }
+
+  btn.disabled = false;
+  document.getElementById('login-text').style.display = 'inline';
+  document.getElementById('login-spin').style.display = 'none';
+}
+
+function mostrarSistema(nombre) {
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('sistema-screen').style.display = 'block';
+  document.getElementById('nav-nombre').textContent = nombre;
+  document.getElementById('hero-nombre').textContent = nombre + '!';
+  cargarProspectos();
+}
+
+async function cargarProspectos() {
+  try {
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/registros?select=*&order=created_at.desc`,
+      { headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` } }
+    );
+    const data = await res.json();
+
+    if (!data || data.length === 0) {
+      document.getElementById('prospectos-body').innerHTML = '<div class="empty-state">Aún no tienes prospectos registrados.</div>';
+      document.getElementById('stat-total').textContent = '0';
+      document.getElementById('stat-negocio').textContent = '0';
+      document.getElementById('stat-sistema').textContent = '0';
+      return;
+    }
+
+    document.getElementById('stat-total').textContent = data.length;
+    document.getElementById('stat-negocio').textContent = data.filter(p => p.interes === 'negocio').length;
+    document.getElementById('stat-sistema').textContent = data.filter(p => p.interes === 'sistema').length;
+
+    const rows = data.map(p => {
+      const fecha = p.created_at ? new Date(p.created_at).toLocaleDateString('es') : '—';
+      const badgeClass = p.interes === 'negocio' ? 'badge-negocio' : p.interes === 'sistema' ? 'badge-sistema' : 'badge-salud';
+      return `<div class="table-row">
+        <span>${p.nombre || '—'}</span>
+        <span>${p.pais || '—'}</span>
+        <span><span class="badge-interes ${badgeClass}">${p.interes || '—'}</span></span>
+        <span>${fecha}</span>
+      </div>`;
+    }).join('');
+
+    document.getElementById('prospectos-body').innerHTML = rows;
+  } catch (e) {
+    document.getElementById('prospectos-body').innerHTML = '<div class="empty-state">Error al cargar prospectos.</div>';
+  }
+}
+
+function showTab(id) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  event.target.classList.add('active');
+  if (id === 'prospectos') cargarProspectos();
+}
+
+function logout() {
+  sessionStorage.clear();
+  location.reload();
+}
+
+// Auto-login si hay sesión activa
+window.onload = () => {
+  const token = sessionStorage.getItem('netiapro_token');
+  const nombre = sessionStorage.getItem('netiapro_nombre');
+  if (token && nombre) mostrarSistema(nombre);
+};
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && document.getElementById('login-screen').style.display !== 'none') {
+    verificarToken();
+  }
+});
+</script>
+</body>
+</html>
