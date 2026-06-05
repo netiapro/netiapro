@@ -434,7 +434,7 @@ function mostrarSistema(nombre) {
 async function cargarProspectos() {
   try {
     const res = await fetch(
-      `${SUPABASE_URL}/rest/v1/registros?select=*&order=created_at.desc`,
+      `${SUPABASE_URL}/rest/v1/registros?select=*&order=fecha_registro.desc`,
       { headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` } }
     );
     const data = await res.json();
@@ -448,16 +448,16 @@ async function cargarProspectos() {
     }
 
     document.getElementById('stat-total').textContent = data.length;
-    document.getElementById('stat-negocio').textContent = data.filter(p => p.interes === 'negocio').length;
-    document.getElementById('stat-sistema').textContent = data.filter(p => p.interes === 'sistema').length;
+    document.getElementById('stat-negocio').textContent = data.filter(p => p.modalidad === 'negocio').length;
+    document.getElementById('stat-sistema').textContent = data.filter(p => p.modalidad === 'sistema').length;
 
     const rows = data.map(p => {
-      const fecha = p.created_at ? new Date(p.created_at).toLocaleDateString('es') : '—';
-      const badgeClass = p.interes === 'negocio' ? 'badge-negocio' : p.interes === 'sistema' ? 'badge-sistema' : 'badge-salud';
+      const fecha = p.fecha_registro ? new Date(p.fecha_registro).toLocaleDateString('es') : '—';
+      const badgeClass = p.modalidad === 'negocio' ? 'badge-negocio' : p.modalidad === 'sistema' ? 'badge-sistema' : 'badge-salud';
       return `<div class="table-row">
         <span>${p.nombre || '—'}</span>
         <span>${p.pais || '—'}</span>
-        <span><span class="badge-interes ${badgeClass}">${p.interes || '—'}</span></span>
+        <span><span class="badge-interes ${badgeClass}">${p.modalidad || '—'}</span></span>
         <span>${fecha}</span>
       </div>`;
     }).join('');
@@ -496,5 +496,4 @@ document.addEventListener('keydown', e => {
 </script>
 </body>
 </html>
-
 
