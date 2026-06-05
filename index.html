@@ -369,7 +369,7 @@ footer{
 <body>
 
 <script>
-const WEBHOOK_URL = 'https://hook.us2.make.com/72v9fqe8ec3hqb6751tr10nwbfzg3v16';
+const WEBHOOK_URL = 'https://hook.us2.make.com/4kqsgeenjtpvkk9cg32im6c3j9l01498';
 const NOMBRE_PATROCINADOR = 'Germán Torres';
 const CODIGO_4LIFE = '12925816';
 
@@ -423,7 +423,7 @@ const LINKS_PAIS = {
     <a onclick="document.getElementById('productos').scrollIntoView({behavior:'smooth'})">Productos</a>
     <a onclick="document.getElementById('negocio').scrollIntoView({behavior:'smooth'})">Negocio</a>
     <a onclick="document.getElementById('sistema').scrollIntoView({behavior:'smooth'})">Sistema</a>
-    <a onclick="document.getElementById('precios').scrollIntoView({behavior:'smooth'})">Precios</a>
+    <a onclick="document.getElementById('precios').scrollIntoView({behavior:'smooth'})">Cómo funciona</a>
     <a class="nav-cta" onclick="document.getElementById('formulario').scrollIntoView({behavior:'smooth'})">Comenzar</a>
   </div>
 </nav>
@@ -724,41 +724,51 @@ const LINKS_PAIS = {
 
 <hr class="div-line">
 
-<!-- PRECIOS -->
+<!-- MODELO -->
 <section id="precios">
-  <div class="s-tag">Planes</div>
-  <h2>Elige tu punto<br>de <em>partida</em></h2>
-  <p class="s-sub">Tu inscripción en 4Life está incluida — quedas en la red bajo el patrocinador y empiezas a comisionar desde el primer día.</p>
-  <div class="pricing-wrap">
-    <div class="price-box">
-      <div class="price-name">Inicio</div>
-      <div class="price-amt">$197 <span>USD</span></div>
-      <div class="price-period">pago único de setup</div>
-      <ul class="price-list">
-        <li>Landing page personalizada</li>
-        <li>Chatbot WhatsApp IA</li>
-        <li>Base de datos de prospectos</li>
-        <li>Automatización de bienvenida</li>
-        <li>1 sesión de onboarding</li>
-        <li class="no">Seguimiento automático 24h</li>
-        <li class="no">Soporte mensual incluido</li>
-      </ul>
-      <button class="btn-outline" style="width:100%;padding:14px;border-radius:6px;font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:600;letter-spacing:0.8px;text-transform:uppercase;cursor:pointer;" onclick="document.getElementById('formulario').scrollIntoView({behavior:'smooth'})">Comenzar con Inicio</button>
+  <div class="s-tag">Modelo de acceso</div>
+  <h2>NetIA Pro es<br><em>completamente gratis</em></h2>
+  <p class="s-sub">Sin costos, sin pagos mensuales. El sistema funciona porque cuando tú creces tu red 4Life, todos ganamos — tú, tus afiliados y ellos con los suyos.</p>
+
+  <div class="sistema-steps" style="margin-bottom:48px">
+    <div class="sistema-step">
+      <div class="step-n">01</div>
+      <div class="step-icon">📋</div>
+      <div class="step-title">Tú te registras en 4Life</div>
+      <div class="step-desc">Llenas el formulario y quedas en la red bajo el patrocinador. Sin costo de inscripción adicional — solo el kit de bienvenida de 4Life.</div>
     </div>
-    <div class="price-box featured">
-      <div class="price-name">Pro</div>
-      <div class="price-amt">$397 <span>USD</span></div>
-      <div class="price-period">primer año · luego $197/año</div>
-      <ul class="price-list">
-        <li>Todo lo del plan Inicio</li>
-        <li>Seguimiento automático 24 horas</li>
-        <li>Soporte mensual por WhatsApp</li>
-        <li>Actualizaciones del sistema</li>
-        <li>Generador de posts para redes</li>
-        <li>Acceso a nuevas funciones</li>
-        <li>Ajustes y mejoras incluidas</li>
-      </ul>
-      <button class="btn-dark" style="width:100%;padding:14px;border-radius:6px;font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:600;letter-spacing:0.8px;text-transform:uppercase;cursor:pointer;border:none;" onclick="document.getElementById('formulario').scrollIntoView({behavior:'smooth'})">Quiero el plan Pro →</button>
+    <div class="sistema-step">
+      <div class="step-n">02</div>
+      <div class="step-icon">🤖</div>
+      <div class="step-title">Recibes acceso a NetIA Pro</div>
+      <div class="step-desc">Una vez confirmado tu registro, te enviamos tu token de acceso por WhatsApp. Entras al sistema y tienes todo listo para operar.</div>
+    </div>
+    <div class="sistema-step">
+      <div class="step-n">03</div>
+      <div class="step-icon">💰</div>
+      <div class="step-title">Todos ganan comisiones</div>
+      <div class="step-desc">Cada persona que se une a tu red genera comisiones para ti — y tú haces lo mismo por tu patrocinador. La red crece sola con el sistema automatizado.</div>
+    </div>
+  </div>
+
+  <div class="features-grid">
+    <div class="feat">
+      <div class="feat-icon">✅</div>
+      <div class="feat-title">Sin costo de setup</div>
+      <div class="feat-desc">No pagas nada por el sistema. Tu única inversión es el kit de inicio de 4Life para activar tu cuenta como Preferred Customer.</div>
+      <span class="feat-tag">Gratis</span>
+    </div>
+    <div class="feat">
+      <div class="feat-icon">🔄</div>
+      <div class="feat-title">Se duplica con tu red</div>
+      <div class="feat-desc">Cada afiliado que incorporas también recibe acceso a NetIA Pro — multiplicando el crecimiento de toda la red automáticamente.</div>
+      <span class="feat-tag">Duplicación</span>
+    </div>
+    <div class="feat">
+      <div class="feat-icon">📈</div>
+      <div class="feat-title">Ingresos para todos</div>
+      <div class="feat-desc">Tú ganas comisiones por tu red directa e indirecta. Tus afiliados ganan por la suya. El sistema trabaja 24/7 para todos.</div>
+      <span class="feat-tag">Residual</span>
     </div>
   </div>
 </section>
@@ -856,21 +866,16 @@ const LINKS_PAIS = {
 
         <div class="fg">
           <label>¿Qué te interesa más?</label>
-          <div class="interes-grid">
-            <label class="interes-opt active" id="opt-salud" onclick="selectInteres('opt-salud','salud')">
-              <input type="radio" name="interes" value="salud" checked>
-              <div class="interes-icon">💊</div>
-              <div class="interes-label">Mejorar mi salud</div>
-            </label>
-            <label class="interes-opt" id="opt-negocio" onclick="selectInteres('opt-negocio','negocio')">
-              <input type="radio" name="interes" value="negocio">
+          <div class="interes-grid" style="grid-template-columns:1fr 1fr">
+            <label class="interes-opt active" id="opt-negocio" onclick="selectInteres('opt-negocio','negocio')">
+              <input type="radio" name="interes" value="negocio" checked>
               <div class="interes-icon">💰</div>
-              <div class="interes-label">Ingresos pasivos</div>
+              <div class="interes-label" style="font-size:12px;font-weight:600;color:var(--ink)">Ingresos pasivos con NetIA Pro</div>
             </label>
-            <label class="interes-opt" id="opt-sistema" onclick="selectInteres('opt-sistema','sistema')">
-              <input type="radio" name="interes" value="sistema">
-              <div class="interes-icon">🤖</div>
-              <div class="interes-label">NetIA Pro</div>
+            <label class="interes-opt" id="opt-salud" onclick="selectInteres('opt-salud','salud')">
+              <input type="radio" name="interes" value="salud">
+              <div class="interes-icon">💊</div>
+              <div class="interes-label" style="font-size:12px;font-weight:600;color:var(--ink)">Mejorar mi salud con 4Life</div>
             </label>
           </div>
         </div>
@@ -920,7 +925,7 @@ const LINKS_PAIS = {
 </footer>
 
 <script>
-let interesValue = 'salud';
+let interesValue = 'negocio';
 
 function showTab(id) {
   document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
@@ -933,7 +938,7 @@ function selectInteres(id, val) {
   document.querySelectorAll('.interes-opt').forEach(o => o.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   interesValue = val;
-  document.getElementById('plan-group').style.display = val === 'sistema' ? 'block' : 'none';
+  document.getElementById('plan-group').style.display = 'none';
 }
 
 async function submitForm() {
